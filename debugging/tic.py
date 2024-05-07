@@ -39,8 +39,7 @@ def check_winner(board):
         return True
 
     return False
-
-```
+    
 def tic_tac_toe():
     board = [[" "]*3 for _ in range(3)]
     player = "X"
@@ -69,4 +68,3 @@ def tic_tac_toe():
         print("It's a draw!")
 
 tic_tac_toe()
-```
