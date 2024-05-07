@@ -40,17 +40,8 @@ def check_winner(board):
 
     return False
 
+```
 def tic_tac_toe():
-    """
-    Function Description:
-    Runs the tic-tac-toe game.
-
-    Parameters:
-    None
-
-    Returns:
-    None
-    """
     board = [[" "]*3 for _ in range(3)]
     player = "X"
     while not check_winner(board):
@@ -58,17 +49,24 @@ def tic_tac_toe():
         try:
             row = int(input("Enter row (0, 1, or 2) for player " + player + ": "))
             col = int(input("Enter column (0, 1, or 2) for player " + player + ": "))
-            if row not in [0, 1, 2] or col not in [0, 1, 2]:
-                raise ValueError("Row and column indices must be 0, 1, or 2.")
-            if board[row][col] == " ":
-                board[row][col] = player
-                player = "O" if player == "X" else "X"
+            if 0 <= row <= 2 and 0 <= col <= 2:
+                if board[row][col] == " ":
+                    board[row][col] = player
+                    if check_winner(board):
+                        break
+                    player = "X" if player == "O" else "O"
+                else:
+                    print("That spot is already taken! Try again.")
             else:
-                print("That spot is already taken! Try again.")
-        except ValueError as e:
-            print("Invalid input:", e)
+                print("Invalid input. Please enter a number between 0 and 2.")
+        except ValueError:
+            print("Invalid input. Please enter a number.")
 
     print_board(board)
-    print("Player " + player + " wins!")
+    if check_winner(board):
+        print("Player " + player + " wins!")
+    else:
+        print("It's a draw!")
 
 tic_tac_toe()
+```
