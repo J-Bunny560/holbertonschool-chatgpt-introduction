@@ -4,26 +4,31 @@ def print_board(board):
         print("-" * 5)
 
 def check_winner(board):
+    # Check rows
     for row in board:
         if row.count(row[0]) == len(row) and row[0] != " ":
-            return True
+            return row[0]
 
+    # Check columns
     for col in range(len(board[0])):
-        if board[0][col] == board[1][col] == board[2][col] and board[0][col] != " ":
-            return True
+        check = []
+        for row in board:
+            check.append(row[col])
+        if check.count(check[0]) == len(check) and check[0] != " ":
+            return check[0]
 
+    # Check diagonals
     if board[0][0] == board[1][1] == board[2][2] and board[0][0] != " ":
-        return True
-
+        return board[0][0]
     if board[0][2] == board[1][1] == board[2][0] and board[0][2] != " ":
-        return True
+        return board[0][2]
 
-    return False
+    return None
 
 def tic_tac_toe():
     board = [[" "]*3 for _ in range(3)]
     player = "X"
-    while not check_winner(board):
+    while True:
         print_board(board)
         while True:
             try:
@@ -35,6 +40,11 @@ def tic_tac_toe():
                     print("That spot is already taken! Try again.")
                 else:
                     board[row][col] = player
+                    winner = check_winner(board)
+                    if winner is not None:
+                        print_board(board)
+                        print("Player " + winner + " wins!")
+                        return
                     if player == "X":
                         player = "O"
                     else:
@@ -42,11 +52,5 @@ def tic_tac_toe():
                     break
             except ValueError:
                 print("Invalid input. Please enter a number.")
-
-    print_board(board)
-    if player == "O":
-        print("Player X wins!")
-    else:
-        print("Player O wins!")
 
 tic_tac_toe()
