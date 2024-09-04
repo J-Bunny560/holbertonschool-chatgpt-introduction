@@ -1,29 +1,35 @@
-#!/usr/bin/python3
+# tic.py
+
 def print_board(board):
+    print(" {} | {} | {}".format(board[0][0], board[0][1], board[0][2]))
+    print("---+---+---")
+    print(" {} | {} | {}".format(board[1][0], board[1][1], board[1][2]))
+    print("---+---+---")
+    print(" {} | {} | {}".format(board[2][0], board[2][1], board[2][2]))
+
+def is_board_full(board):
     for row in board:
-        print(" | ".join(row))
-        print("-" * 5)
+        if " " in row:
+            return False
+    return True
 
 def check_winner(board):
     # Check rows
     for row in board:
         if row.count(row[0]) == len(row) and row[0] != " ":
             return row[0]
-
     # Check columns
-    for col in range(len(board[0])):
+    for col in range(len(board)):
         check = []
         for row in board:
             check.append(row[col])
         if check.count(check[0]) == len(check) and check[0] != " ":
             return check[0]
-
     # Check diagonals
     if board[0][0] == board[1][1] == board[2][2] and board[0][0] != " ":
         return board[0][0]
     if board[0][2] == board[1][1] == board[2][0] and board[0][2] != " ":
         return board[0][2]
-
     return None
 
 def tic_tac_toe():
@@ -46,6 +52,10 @@ def tic_tac_toe():
                         print_board(board)
                         print("Player " + winner + " wins!")
                         return
+                    if is_board_full(board):
+                        print_board(board)
+                        print("It's a draw!")
+                        return
                     if player == "X":
                         player = "O"
                     else:
@@ -54,4 +64,5 @@ def tic_tac_toe():
             except ValueError:
                 print("Invalid input. Please enter a number.")
 
-tic_tac_toe()
+if __name__ == "__main__":
+    tic_tac_toe()
